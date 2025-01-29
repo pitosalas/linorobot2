@@ -71,8 +71,7 @@
   </xacro:depth_sensor>
 
   <xacro:sonar>
-    <xacro:insert_block name="sonar_pose" 
-    />
+    <xacro:insert_block name="sonar_pose" />
   </xacro:sonar>
 
   <xacro:diff_drive_controller
