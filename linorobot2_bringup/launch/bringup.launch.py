@@ -89,7 +89,7 @@ def generate_launch_description():
 
         DeclareLaunchArgument(
             name='madgwick',
-            default_value='false',
+            default_value='true',
             description='Use madgwick to fuse imu and magnetometer'
         ),
 
