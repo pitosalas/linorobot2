@@ -113,8 +113,12 @@ def generate_launch_description():
             output='screen',
             parameters=[{
                 'orientation_stddev' : LaunchConfiguration('orientation_stddev'),
-                'publish_tf' : False
-            }]
+                'publish_tf' : False,
+                'publish_debug_topics': True
+            }],
+            remappings=[
+                ('imu/data_raw', 'imu/corrected_data')
+            ]
         ),
 
         Node(
