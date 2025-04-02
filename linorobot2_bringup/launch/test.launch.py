@@ -39,7 +39,7 @@ def generate_launch_description():
     )
 
     default_robot_launch_path = PathJoinSubstitution(
-        [FindPackageShare('linorobot2_bringup'), 'launch', 'default_robot.launch.py']
+        [FindPackageShare('linorobot2_bringup'), 'launch', 'default_test.launch.py']
     )
 
     custom_robot_launch_path = PathJoinSubstitution(
@@ -126,6 +126,7 @@ def generate_launch_description():
         ),
 
         Node(
+            condition=IfCondition("false"),
             package='robot_localization',
             executable='ekf_node',
             name='ekf_filter_node',
@@ -152,11 +153,5 @@ def generate_launch_description():
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(custom_robot_launch_path),
             condition=IfCondition(LaunchConfiguration("custom_robot")),
-        ),
-
-        IncludeLaunchDescription(
-            PythonLaunchDescriptionSource(joy_launch_path),
-            condition=IfCondition(LaunchConfiguration("joy")),
         )
-
     ])
