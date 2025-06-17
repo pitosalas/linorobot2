@@ -14,42 +14,33 @@
 
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
-from launch.substitutions import LaunchConfiguration, PathJoinSubstitution, PythonExpression
+from launch.substitutions import LaunchConfiguration, PathJoinSubstitution, EqualsSubstitution
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch_ros.actions import Node
+import launch
 from launch_ros.substitutions import FindPackageShare
 from launch.conditions import IfCondition, UnlessCondition
 
 
 def generate_launch_description():
-    # sensors_launch_path = PathJoinSubstitution(
-    #     [FindPackageShare('linorobot2_bringup'), 'launch', 'sensors.launch.py']
-    # )
-
     joy_launch_path = PathJoinSubstitution(
         [FindPackageShare('linorobot2_bringup'), 'launch', 'joy_teleop.launch.py']
     )
-
     description_launch_path = PathJoinSubstitution(
         [FindPackageShare('linorobot2_description'), 'launch', 'description.launch.py']
     )
-
     ekf_config_path = PathJoinSubstitution(
         [FindPackageShare("linorobot2_base"), "config", "ekf.yaml"]
     )
-
     default_robot_launch_path = PathJoinSubstitution(
         [FindPackageShare('linorobot2_bringup'), 'launch', 'default_robot.launch.py']
     )
-
     custom_robot_launch_path = PathJoinSubstitution(
         [FindPackageShare('linorobot2_bringup'), 'launch', 'custom_robot.launch.py']
     )
-
     extra_launch_path = PathJoinSubstitution(
         [FindPackageShare('linorobot2_bringup'), 'launch', 'extra.launch.py']
     )
-
     return LaunchDescription([
         DeclareLaunchArgument(
             name='custom_robot', 
@@ -146,17 +137,19 @@ def generate_launch_description():
 
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(extra_launch_path),
-            condition=IfCondition(LaunchConfiguration("extra")),
+            condition=IfCondition(EqualsSubstitution(LaunchConfiguration('extra'),"true")),
+
         ),
 
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(custom_robot_launch_path),
-            condition=IfCondition(LaunchConfiguration("custom_robot")),
+            condition=IfCondition(EqualsSubstitution(LaunchConfiguration('custom_robot'),"true")),
+
         ),
 
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(joy_launch_path),
-            condition=IfCondition(LaunchConfiguration("joy")),
+            condition=IfCondition(EqualsSubstitution(LaunchConfiguration('joy'),"true")),
         )
 
     ])
