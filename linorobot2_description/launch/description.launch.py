@@ -25,7 +25,7 @@ def generate_launch_description():
     robot_base = os.getenv('LINOROBOT2_BASE')
 
     urdf_path = PathJoinSubstitution(
-        [FindPackageShare("linorobot2_description"), "urdf/robots", f"{robot_base}.urdf.xacro"]
+        [FindPackageShare("linorobot2_description"), "urdf", "dome1.urdf"]
     )
 
     rviz_config_path = PathJoinSubstitution(
