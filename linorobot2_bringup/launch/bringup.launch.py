@@ -98,7 +98,7 @@ def generate_launch_description():
 
         DeclareLaunchArgument(
             name='joy', 
-            default_value='false',
+            default_value='true',
             description='Use Joystick'
         ),
 
@@ -148,8 +148,8 @@ def generate_launch_description():
         ),
 
         IncludeLaunchDescription(
-            PythonLaunchDescriptionSource(joy_launch_path),
-            condition=IfCondition(EqualsSubstitution(LaunchConfiguration('joy'),"true")),
+            PythonLaunchDescriptionSource(joy_launch_path)
+            # condition=IfCondition(EqualsSubstitution(LaunchConfiguration('joy'),"true")),
         )
 
     ])
