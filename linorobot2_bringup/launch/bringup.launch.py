@@ -105,6 +105,12 @@ def generate_launch_description():
             description='Use Joystick'
         ),
 
+        DeclareLaunchArgument(
+            name='urdf', 
+            default_value="/",
+            description='URDF path'
+        ),
+
         Node(
             condition=IfCondition(LaunchConfiguration("madgwick")),
             package='imu_filter_madgwick',
@@ -144,5 +150,10 @@ def generate_launch_description():
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(custom_robot_launch_path),
             condition=IfCondition(LaunchConfiguration("custom_robot")),
-        )
-    ])
+        ),
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(joy_launch_path),
+            condition=IfCondition(LaunchConfiguration("joy")),
+        ),
+    ]
+)
