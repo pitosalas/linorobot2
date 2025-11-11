@@ -60,6 +60,12 @@ def generate_launch_description():
                 description="Enable use_sime_time to true",
             ),
             DeclareLaunchArgument(
+                name="config",
+                default_value="/",
+                description="slam config file",
+            ),
+            
+            DeclareLaunchArgument(
                 name="rviz", default_value="false", description="Run rviz"
             ),
             IncludeLaunchDescription(
