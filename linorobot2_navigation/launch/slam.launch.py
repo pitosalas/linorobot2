@@ -30,16 +30,16 @@ def generate_launch_description():
         [FindPackageShare("slam_toolbox"), "launch", "online_async_launch.py"]
     )
 
-    slam_config_path = PathJoinSubstitution(
-        [FindPackageShare("linorobot2_navigation"), "config", "slam.yaml"]
-    )
-
     navigation_launch_path = PathJoinSubstitution(
         [FindPackageShare("nav2_bringup"), "launch", "navigation_launch.py"]
     )
 
     nav2_config_path = PathJoinSubstitution(
         [FindPackageShare("linorobot2_navigation"), "config", "navigation.yaml"]
+    )
+
+    slam_config_path = PathJoinSubstitution(
+        [FindPackageShare("linorobot2_navigation"), "config", "slam.yaml"]
     )
 
     rviz_config_path = PathJoinSubstitution(
@@ -60,11 +60,15 @@ def generate_launch_description():
                 description="Enable use_sime_time to true",
             ),
             DeclareLaunchArgument(
-                name="config",
-                default_value="/",
-                description="slam config file",
+                name="nav_config",
+                default_value=nav2_config_path,
+                description="nav2 config file",
             ),
-            
+            DeclareLaunchArgument(
+                name="slam_config",
+                default_value=slam_config_path,
+                default="slam config file",
+            ),
             DeclareLaunchArgument(
                 name="rviz", default_value="false", description="Run rviz"
             ),
@@ -72,14 +76,14 @@ def generate_launch_description():
                 PythonLaunchDescriptionSource(navigation_launch_path),
                 launch_arguments={
                     "use_sim_time": LaunchConfiguration("sim"),
-                    "params_file": nav2_config_path,
+                    "params_file": LaunchConfiguration("nav_config"),
                 }.items(),
             ),
             IncludeLaunchDescription(
                 PythonLaunchDescriptionSource(slam_launch_path),
                 launch_arguments={
                     "use_sim_time": LaunchConfiguration("sim"),
-                    slam_param_name: slam_config_path,
+                    slam_param_name: LaunchConfiguration("slam_config_path"),
                 }.items(),
             ),
             Node(
