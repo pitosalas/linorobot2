@@ -104,6 +104,13 @@ def generate_launch_description():
             default_value='false',
             description='Use Joystick'
         ),
+
+        DeclareLaunchArgument(
+            name='urdf', 
+            default_value="/",
+            description='URDF path'
+        ),
+
         Node(
             condition=IfCondition(LaunchConfiguration("madgwick")),
             package='imu_filter_madgwick',
@@ -126,6 +133,7 @@ def generate_launch_description():
             ],
             remappings=[("odometry/filtered", LaunchConfiguration("odom_topic"))]
         ),
+
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(default_robot_launch_path),
             condition=UnlessCondition(LaunchConfiguration("custom_robot")),
@@ -133,10 +141,12 @@ def generate_launch_description():
                 'base_serial_port': LaunchConfiguration("base_serial_port")
             }.items()
         ),
+
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(extra_launch_path),
             condition=IfCondition(LaunchConfiguration("extra")),
         ),
+
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(custom_robot_launch_path),
             condition=IfCondition(LaunchConfiguration("custom_robot")),

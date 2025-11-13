@@ -22,7 +22,9 @@ from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 
-MAP_NAME = "playground"  # change to the name of your own map here
+MAP_NAME = (
+    "/home/pitosalas/.control/maps/basement"  # change to the name of your own map here
+)
 
 
 def generate_launch_description():
@@ -63,6 +65,11 @@ def generate_launch_description():
                 name="rviz", default_value="false", description="Run rviz"
             ),
             DeclareLaunchArgument(
+                name="config",
+                default_value=nav2_config_path,
+                description="path to config yaml",
+            ),
+            DeclareLaunchArgument(
                 name="map",
                 default_value=default_map_path,
                 description="Navigation map path",
@@ -73,16 +80,17 @@ def generate_launch_description():
                 launch_arguments={
                     "map": LaunchConfiguration("map"),
                     "use_sim_time": LaunchConfiguration("sim"),
-                    "params_file": nav2_config_path,
+                    "params_file": LaunchConfiguration("config"),
                 }.items(),
             ),
+            # Pito Note:There should be a different config for the sim mode
             IncludeLaunchDescription(
                 PythonLaunchDescriptionSource(nav2_launch_path),
                 condition=IfCondition(LaunchConfiguration("sim")),
                 launch_arguments={
                     "map": LaunchConfiguration("map"),
                     "use_sim_time": LaunchConfiguration("sim"),
-                    "params_file": nav2_sim_config_path,
+                    "params_file": LaunchConfiguration("config"),
                 }.items(),
             ),
             Node(
