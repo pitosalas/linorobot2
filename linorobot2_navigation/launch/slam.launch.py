@@ -67,7 +67,7 @@ def generate_launch_description():
             DeclareLaunchArgument(
                 name="slam_config",
                 default_value=slam_config_path,
-                default="slam config file",
+                description="slam config file",
             ),
             DeclareLaunchArgument(
                 name="rviz", default_value="false", description="Run rviz"
@@ -83,7 +83,7 @@ def generate_launch_description():
                 PythonLaunchDescriptionSource(slam_launch_path),
                 launch_arguments={
                     "use_sim_time": LaunchConfiguration("sim"),
-                    slam_param_name: LaunchConfiguration("slam_config_path"),
+                    slam_param_name: LaunchConfiguration("slam_config"),
                 }.items(),
             ),
             Node(
