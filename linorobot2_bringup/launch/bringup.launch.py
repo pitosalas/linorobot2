@@ -34,7 +34,7 @@ def generate_launch_description():
         [FindPackageShare('linorobot2_description'), 'launch', 'description.launch.py']
     )
 
-    ekf_config_path = PathJoinSubstitution(
+    ekf_yaml_config_path = PathJoinSubstitution(
         [FindPackageShare("linorobot2_base"), "config", "ekf.yaml"]
     )
 
@@ -106,6 +106,12 @@ def generate_launch_description():
         ),
 
         DeclareLaunchArgument(
+            name='ekf_config_path', 
+            default_value= ekf_yaml_config_path,
+            description='path to ekf.config file'
+        ),
+
+        DeclareLaunchArgument(
             name='urdf', 
             default_value="/",
             description='URDF path'
@@ -129,7 +135,7 @@ def generate_launch_description():
             name='ekf_filter_node',
             output='screen',
             parameters=[
-                ekf_config_path
+                LaunchConfiguration("ekf_config_path")
             ],
             remappings=[("odometry/filtered", LaunchConfiguration("odom_topic"))]
         ),
