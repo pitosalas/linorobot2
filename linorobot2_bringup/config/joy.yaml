@@ -5,7 +5,11 @@ teleop_twist_joy_node:
       x: 4
 
     scale_linear:
+<<<<<<< HEAD
       x: 0.5
+=======
+      x: 0.9
+>>>>>>> upstream/rolling
 
     axis_angular:
       yaw: 3 
