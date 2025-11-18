@@ -272,17 +272,17 @@ def generate_launch_description():
 
         OpaqueFunction(function=launch_rplidar),
 
-        # Node(
-        #     package="laser_filters",
-        #     executable="scan_to_scan_filter_chain",
-        #     parameters=[
-        #         laser_filter_config_path
-        #     ],
-        #     remappings=[
-        #         ('scan', 'scan/unfiltered'),
-        #         ('scan_filtered', LaunchConfiguration('topic_name'))
-        #     ]
-        # )
+        Node(
+            package="laser_filters",
+            executable="scan_to_scan_filter_chain",
+            parameters=[
+                laser_filter_config_path
+            ],
+            remappings=[
+                ('scan', 'scan/unfiltered'),
+                ('scan_filtered', LaunchConfiguration('topic_name'))
+            ]
+        )
 
     ])
 
