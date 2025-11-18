@@ -232,7 +232,7 @@ def generate_launch_description():
             output='screen',
             parameters=[
                 {'product_name': 'LDLiDAR_LD19'},
-                {'topic_name': 'scan'},
+                {'topic_name': 'scan/unfiltered'},
                 {'frame_id': LaunchConfiguration('frame_id')},
                 {'comm_mode': LaunchConfiguration('lidar_transport')},
                 {'port_name': LaunchConfiguration('lidar_serial_port')},
