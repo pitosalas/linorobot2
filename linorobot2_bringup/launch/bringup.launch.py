@@ -1,4 +1,5 @@
 # Copyright (c) 2021 Juan Miguel Jimeno
+# Modified by Pito Salas
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,6 +20,7 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 from launch.conditions import IfCondition, UnlessCondition
+import os
 
 
 def generate_launch_description():
@@ -29,6 +31,12 @@ def generate_launch_description():
     joy_launch_path = PathJoinSubstitution(
         [FindPackageShare('linorobot2_bringup'), 'launch', 'joy_teleop.launch.py']
     )
+
+    robot_base = os.getenv('LINOROBOT2_BASE')
+    urdf_path = PathJoinSubstitution(
+    [FindPackageShare("linorobot2_description"), "urdf/robots", f"{robot_base}.urdf.xacro"]
+    )
+
 
     description_launch_path = PathJoinSubstitution(
         [FindPackageShare('linorobot2_description'), 'launch', 'description.launch.py']
@@ -113,7 +121,7 @@ def generate_launch_description():
 
         DeclareLaunchArgument(
             name='urdf', 
-            default_value="/",
+            default_value=urdf_path,
             description='URDF path'
         ),
 
