@@ -49,6 +49,7 @@ def generate_launch_description():
         [FindPackageShare('linorobot2_navigation'), 'config', 'navigation_sim.yaml']
     )
 
+
     return LaunchDescription([
         DeclareLaunchArgument(
             name='sim', 
@@ -68,14 +69,20 @@ def generate_launch_description():
             description='Navigation map path'
         ),
 
+       DeclareLaunchArgument(
+            name='nav2_config', 
+            default_value=nav2_config_path,
+            description='Navigation map path'
+        ),
+
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(nav2_launch_path),
             condition=UnlessCondition(LaunchConfiguration("sim")),
             launch_arguments={
-                "map": LaunchConfiguration("map"),
-                "use_sim_time": LaunchConfiguration("sim"),
-                "params_file": LaunchConfiguration("config"),
-            }.items(),
+                'map': LaunchConfiguration("map"),
+                'use_sim_time': LaunchConfiguration("sim"),
+                'params_file': LaunchConfiguration("nav2_config"),
+            }.items()
         ),
         # Pito Note:There should be a different config for the sim mode
         IncludeLaunchDescription(
@@ -84,16 +91,17 @@ def generate_launch_description():
             launch_arguments={
                 'map': LaunchConfiguration("map"),
                 'use_sim_time': LaunchConfiguration("sim"),
-                'params_file': LaunchConfiguration("config"),
+                'params_file': LaunchConfiguration("nav2_config"),
             }.items(),
         ),
+
         Node(
-            package="rviz2",
-            executable="rviz2",
-            name="rviz2",
-            output="screen",
-            arguments=["-d", rviz_config_path],
+            package='rviz2',
+            executable='rviz2',
+            name='rviz2',
+            output='screen',
+            arguments=['-d', rviz_config_path],
             condition=IfCondition(LaunchConfiguration("rviz")),
-            parameters=[{"use_sim_time": LaunchConfiguration("sim")}],
-    	)
-	])
+            parameters=[{'use_sim_time': LaunchConfiguration("sim")}]
+        )
+    ])
