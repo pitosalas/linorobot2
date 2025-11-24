@@ -65,11 +65,23 @@ def generate_launch_description():
             description='Run rviz'
         ),
 
+        DeclareLaunchArgument(
+            name='slam_config', 
+            default_value=slam_config_path,
+            description='Slam Config Yaml File'
+        ),
+        DeclareLaunchArgument(
+            name='nav_config', 
+            default_value=nav2_config_path,
+            description='Nav Config Yaml File'
+        ),
+
+
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(navigation_launch_path),
             launch_arguments={
                 'use_sim_time': LaunchConfiguration("sim"),
-                'params_file': nav2_config_path
+                'params_file': LaunchConfiguration("nav_config")
             }.items()
         ),
 
@@ -77,7 +89,7 @@ def generate_launch_description():
             PythonLaunchDescriptionSource(slam_launch_path),
             launch_arguments={
                 'use_sim_time': LaunchConfiguration("sim"),
-                slam_param_name: slam_config_path
+                slam_param_name: LaunchConfiguration("slam_config")
             }.items()
         ),
 
