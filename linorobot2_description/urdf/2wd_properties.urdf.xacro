@@ -12,19 +12,19 @@
   <xacro:property name="wheel_pos_z" value="-0.03" />
   <xacro:property name="wheel_mass" value=".1" />
   <xacro:property name="wheel_torque" value="20" />
-  <xacro:property name="front_caster_wheel" value="false" />
+  <xacro:property name="front_caster_wheel" value="true" />
   <xacro:property name="rear_caster_wheel" value="true" />
 
   <xacro:property name="laser_pose">
-    <origin xyz="0.0 0 0.10" rpy="0 0 -${pi/2}"/>
+    <origin xyz="0.12 0 0.33" rpy="0 0 0"/>
   </xacro:property>
 
   <xacro:property name="depth_sensor_pose">
     <origin xyz="0.14 0.0 0.045" rpy="0 0 0"/>
   </xacro:property>
 
-  <xacro:property name="rear_camera_sensor_pose">
-    <origin xyz="-0.14 0.0 0.045" rpy="0 0 3.14159"/>
+  <xacro:property name="sonar_pose">
+    <origin xyz="0.15 0 0" rpy="0 0 0"/>
   </xacro:property>
 
 </robot>

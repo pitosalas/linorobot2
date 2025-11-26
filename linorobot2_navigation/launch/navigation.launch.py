@@ -18,11 +18,13 @@ from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
 from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.conditions import IfCondition, UnlessCondition
+from launch.conditions import IfCondition
 from launch_ros.substitutions import FindPackageShare
 from launch_ros.actions import Node
-MAP_NAME = "playground"  # change to the name of your own map here
+from launch.conditions import IfCondition, UnlessCondition
 
+
+MAP_NAME='playground' #change to the name of your own map here
 
 def generate_launch_description():
     depth_sensor = os.getenv('LINOROBOT2_DEPTH_SENSOR', '')
@@ -63,12 +65,6 @@ def generate_launch_description():
        DeclareLaunchArgument(
             name='map', 
             default_value=default_map_path,
-            description='Navigation map path'
-        ),
-
-       DeclareLaunchArgument(
-            name='nav2_config', 
-            default_value=nav2_config_path,
             description='Navigation map path'
         ),
 
