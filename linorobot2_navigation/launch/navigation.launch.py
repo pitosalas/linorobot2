@@ -18,7 +18,7 @@ from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
 from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.conditions import IfCondition
+
 from launch_ros.substitutions import FindPackageShare
 from launch_ros.actions import Node
 from launch.conditions import IfCondition, UnlessCondition
@@ -67,6 +67,12 @@ def generate_launch_description():
             default_value=default_map_path,
             description='Navigation map path'
         ),
+		
+        DeclareLaunchArgument(
+            name='nav2_config', 
+            default_value=nav2_config_path, # Use the real-robot config as default
+            description='Full path to the navigation parameters file.'
+        ),		
 
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(nav2_launch_path),
@@ -77,14 +83,14 @@ def generate_launch_description():
                 'params_file': LaunchConfiguration("nav2_config"),
             }.items()
         ),
-        # Pito Note:There should be a different config for the sim mode
+
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(nav2_launch_path),
             condition=IfCondition(LaunchConfiguration("sim")),
             launch_arguments={
                 'map': LaunchConfiguration("map"),
                 'use_sim_time': LaunchConfiguration("sim"),
-                'params_file': LaunchConfiguration("nav2_config"),
+                'params_file': nav2_sim_config_path
             }.items(),
         ),
 
