@@ -3,25 +3,25 @@ teleop_twist_joy_node:
   ros__parameters:
     require_enable_button: true
     axis_linear:
-      x: 4
+      x: 3
 
     scale_linear:
-      x: 0.9
+      x: 0.5
 
     axis_angular:
-      yaw: 3 
+      yaw: 2 
 
     scale_angular:
-      yaw: 1.0 
+      yaw: 0.6
 
     scale_linear_turbo:
-      x: 1.5
+      x: 1.0
 
     scale_angular_turbo:
-      yaw: 2.0
+      yaw: 1.0
 
-    enable_button: 5
+    enable_button: 4
 
-    turbo_button: 4
+    turbo_button: 6
 
 
